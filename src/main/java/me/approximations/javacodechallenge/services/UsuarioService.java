@@ -6,10 +6,11 @@ import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
 import me.approximations.javacodechallenge.entities.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Optional;
 
-public interface UsuarioService {
+public interface UsuarioService extends UserDetailsService {
     /**
      * Registra um novo usúario no sistema.
      *
