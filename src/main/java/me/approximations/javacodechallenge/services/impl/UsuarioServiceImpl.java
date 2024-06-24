@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
@@ -31,18 +33,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario findById(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found."));
+    public Optional<Usuario> findById(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override
-    public Usuario findByEmail(String email) {
-        return usuarioRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found."));
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
     @Override
     public Usuario update(UpdateUsuarioDTO dto) {
-        final Usuario user = findById(dto.id());
+        final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
 
         user.setName(dto.name());
         user.setCpf(dto.cpf());
@@ -53,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario updatePassword(UpdateUsuarioPasswordDTO dto) {
-        final Usuario user = findById(dto.id());
+        final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
 
         user.setPassword(passwordEncoder.encode(dto.password()));
 
@@ -62,7 +64,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void delete(Long id) {
-        usuarioRepository.delete(findById(id));
+        final Usuario user = findById(id).orElseThrow(() -> new NotFoundException("User not found."));
+        usuarioRepository.delete(user);
     }
 }
 

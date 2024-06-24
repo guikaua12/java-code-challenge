@@ -8,6 +8,7 @@ import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
 import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
 import me.approximations.javacodechallenge.dtos.UsuarioDTO;
 import me.approximations.javacodechallenge.entities.Usuario;
+import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,9 @@ public class UsuarioControllerImpl implements UsuarioController {
 
     @Override
     public UsuarioDTO findById(Long id) {
-        return modelMapper.map(usuarioService.findById(id), UsuarioDTO.class);
+        final Usuario user = usuarioService.findById(id).orElseThrow(() -> new NotFoundException("User not found."));
+
+        return modelMapper.map(user, UsuarioDTO.class);
     }
 
     @Override

@@ -7,6 +7,8 @@ import me.approximations.javacodechallenge.entities.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface UsuarioService {
     /**
      * Registra um novo usúario no sistema.
@@ -30,7 +32,7 @@ public interface UsuarioService {
      * @param id O ID do usuário a ser encontrado.
      * @return Um Optional de Usuario contendo os detalhes do usuário encontrado.
      */
-    Usuario findById(Long id);
+    Optional<Usuario> findById(Long id);
 
     /**
      * Encontra um usuário pelo seu ID.
@@ -38,7 +40,7 @@ public interface UsuarioService {
      * @param email O email do usuário a ser encontrado.
      * @return Um Optional de Usuario contendo os detalhes do usuário encontrado.
      */
-    Usuario findByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
 
     /**
      * Atualiza um usuário existente.
