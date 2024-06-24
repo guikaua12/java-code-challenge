@@ -14,9 +14,11 @@ import java.time.Instant;
 public class JwtServiceImpl implements JwtService {
     private static final String ISSUER = "Jwt Issuer";
     private final Algorithm algorithm;
+    private final JwtProperties jwtProperties;
 
     public JwtServiceImpl(JwtProperties jwtProperties) {
         this.algorithm = Algorithm.HMAC256(jwtProperties.getSecret());
+        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -26,7 +28,12 @@ public class JwtServiceImpl implements JwtService {
                 .withSubject(String.valueOf(payload.id()))
                 .withClaim(JwtPayload.EMAIL, payload.email())
                 .withIssuedAt(Instant.now())
+                .withExpiresAt(expiresAt())
                 .sign(algorithm);
+    }
+
+    private Instant expiresAt() {
+        return Instant.now().plus(jwtProperties.getExpiration());
     }
 
     @Override

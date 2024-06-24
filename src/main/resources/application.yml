@@ -9,3 +9,4 @@ spring:
 
 jwt:
   secret: token_super_secreto
+  expiration: 24h
