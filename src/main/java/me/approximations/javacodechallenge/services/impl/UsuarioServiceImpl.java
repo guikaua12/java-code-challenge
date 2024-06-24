@@ -36,6 +36,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found."));
+    }
+
+    @Override
     public Usuario update(UpdateUsuarioDTO dto) {
         final Usuario user = findById(dto.id());
 

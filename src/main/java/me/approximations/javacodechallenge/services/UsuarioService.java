@@ -33,6 +33,14 @@ public interface UsuarioService {
     Usuario findById(Long id);
 
     /**
+     * Encontra um usuário pelo seu ID.
+     *
+     * @param email O email do usuário a ser encontrado.
+     * @return Um Optional de Usuario contendo os detalhes do usuário encontrado.
+     */
+    Usuario findByEmail(String email);
+
+    /**
      * Atualiza um usuário existente.
      *
      * @param dto Um objeto de transferência de dados contendo os novos detalhes do usuário.
