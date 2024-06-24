@@ -7,9 +7,13 @@ import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
+import me.approximations.javacodechallenge.security.CustomUserDetails;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService {
+public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -66,6 +70,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Long id) {
         final Usuario user = findById(id).orElseThrow(() -> new NotFoundException("User not found."));
         usuarioRepository.delete(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        final Usuario user = findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+
+        return new CustomUserDetails(user);
     }
 }
 
