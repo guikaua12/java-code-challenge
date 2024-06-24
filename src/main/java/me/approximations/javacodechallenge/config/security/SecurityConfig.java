@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private static final PathMatcher[] PUBLIC_ENDPOINTS = {
             new PathMatcher("/user/register"),
-            new PathMatcher(HttpMethod.GET, "/user"),
+            new PathMatcher(HttpMethod.GET, "/user/"),
             new PathMatcher(HttpMethod.GET, "/user/{id}"),
     };
 
