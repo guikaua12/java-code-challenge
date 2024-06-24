@@ -25,14 +25,14 @@ public class SecurityConfig {
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JWTConfigurer jwtConfigurer) throws Exception {
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(c ->
                         configurePublicEndpoints(c)
                                 .anyRequest().authenticated()
-                );
+                ).apply(jwtConfigurer);
 
         return http.build();
     }

@@ -6,3 +6,6 @@ spring:
     username: postgres
     password: pass
     driver-class-name: org.postgresql.Driver
+
+jwt:
+  secret: token_super_secreto
