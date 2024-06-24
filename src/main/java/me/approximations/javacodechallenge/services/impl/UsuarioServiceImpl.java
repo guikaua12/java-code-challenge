@@ -11,7 +11,6 @@ import me.approximations.javacodechallenge.security.CustomUserDetails;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         final Usuario user = findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         return new CustomUserDetails(user);

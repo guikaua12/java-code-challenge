@@ -4,9 +4,11 @@ import me.approximations.javacodechallenge.dtos.RegisterUsuarioDTO;
 import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
 import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
 import me.approximations.javacodechallenge.entities.Usuario;
+import me.approximations.javacodechallenge.security.CustomUserDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
@@ -65,4 +67,7 @@ public interface UsuarioService extends UserDetailsService {
      * @param id O id do usuário a ser deletado
      */
     void delete(Long id);
+
+    @Override
+    CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }
