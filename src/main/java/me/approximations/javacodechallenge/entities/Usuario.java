@@ -25,6 +25,9 @@ public class Usuario {
     @Convert(converter=CargoTypeConverter.class)
     private Cargo role;
 
+    @ManyToOne
+    private Departamento department;
+
     public Usuario(Long id, String name, String cpf, String email, String password, Cargo role) {
         this.id = id;
         this.name = name;

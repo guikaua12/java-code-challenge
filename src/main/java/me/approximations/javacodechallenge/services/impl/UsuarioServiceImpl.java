@@ -2,6 +2,7 @@ package me.approximations.javacodechallenge.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.approximations.javacodechallenge.dtos.*;
+import me.approximations.javacodechallenge.entities.Departamento;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.enums.Cargo;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
@@ -12,6 +13,7 @@ import me.approximations.javacodechallenge.security.UserAdminRoleChecker;
 import me.approximations.javacodechallenge.security.jwt.payload.JwtPayload;
 import me.approximations.javacodechallenge.security.jwt.service.JwtService;
 import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
+import me.approximations.javacodechallenge.services.DepartamentoService;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final UserAdminRoleChecker userAdminRoleChecker;
+    private final DepartamentoService departmentService;
 
     @Override
     public TokenResponse login(UsuarioLoginDTO dto) {
@@ -47,6 +50,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         /* default role to ADMIN just to make it easier for those who are going to test the code later */
         final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, Cargo.ADMIN);
+
+        final Departamento department = findDepartmentById(dto.departmentId());
+        user.setDepartment(department);
+
         usuarioRepository.save(user);
 
         return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
@@ -61,9 +68,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         final String encryptedPassword = passwordEncoder.encode(dto.password());
-
         final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, role);
+
+        final Departamento department = findDepartmentById(dto.departmentId());
+        user.setDepartment(department);
+
         return usuarioRepository.save(user);
+    }
+
+    private Departamento findDepartmentById(Long id) {
+        if (id == null) return null;
+
+        return departmentService.findById(id).orElseThrow(() -> new NotFoundException("Department not found"));
     }
 
     @Override
