@@ -29,7 +29,7 @@ public interface UsuarioController {
     UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto, JwtAuthenticationToken authentication);
 
     @PatchMapping("/password")
-    UsuarioDTO updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication);
+    UsuarioDTO updatePassword(@RequestBody @Valid UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication);
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
