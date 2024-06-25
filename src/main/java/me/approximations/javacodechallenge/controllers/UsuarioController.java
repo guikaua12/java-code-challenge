@@ -1,15 +1,15 @@
 package me.approximations.javacodechallenge.controllers;
 
 import jakarta.validation.Valid;
-import me.approximations.javacodechallenge.dtos.RegisterUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
-import me.approximations.javacodechallenge.dtos.UsuarioDTO;
+import me.approximations.javacodechallenge.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 public interface UsuarioController {
+    @PostMapping("/login")
+    TokenResponse login(@RequestBody @Valid UsuarioLoginDTO dto);
+
     @PostMapping("/register")
     UsuarioDTO register(@RequestBody @Valid RegisterUsuarioDTO dto);
 

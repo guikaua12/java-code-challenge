@@ -1,8 +1,6 @@
 package me.approximations.javacodechallenge.services;
 
-import me.approximations.javacodechallenge.dtos.RegisterUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
+import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
 import org.springframework.data.domain.Page;
@@ -13,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 public interface UsuarioService extends UserDetailsService {
+    TokenResponse login(UsuarioLoginDTO dto);
+
     /**
      * Registra um novo usúario no sistema.
      *

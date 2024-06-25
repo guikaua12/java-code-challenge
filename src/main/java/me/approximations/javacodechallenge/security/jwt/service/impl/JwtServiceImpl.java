@@ -3,6 +3,7 @@ package me.approximations.javacodechallenge.security.jwt.service.impl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import me.approximations.javacodechallenge.dtos.TokenResponse;
 import me.approximations.javacodechallenge.properties.JwtProperties;
 import me.approximations.javacodechallenge.security.jwt.payload.JwtPayload;
 import me.approximations.javacodechallenge.security.jwt.service.JwtService;
@@ -22,14 +23,18 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String encode(JwtPayload payload) {
-        return JWT.create()
+    public TokenResponse encode(JwtPayload payload) {
+        final Instant expiresAt = expiresAt();
+
+        final String token = JWT.create()
                 .withIssuer(ISSUER)
                 .withSubject(String.valueOf(payload.id()))
                 .withClaim(JwtPayload.EMAIL, payload.email())
                 .withIssuedAt(Instant.now())
-                .withExpiresAt(expiresAt())
+                .withExpiresAt(expiresAt)
                 .sign(algorithm);
+
+        return new TokenResponse(payload.id(), payload.email(), token, expiresAt.toEpochMilli());
     }
 
     private Instant expiresAt() {

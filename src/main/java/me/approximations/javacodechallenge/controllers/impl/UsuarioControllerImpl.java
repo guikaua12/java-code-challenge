@@ -3,10 +3,7 @@ package me.approximations.javacodechallenge.controllers.impl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.approximations.javacodechallenge.controllers.UsuarioController;
-import me.approximations.javacodechallenge.dtos.RegisterUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
-import me.approximations.javacodechallenge.dtos.UsuarioDTO;
+import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.services.UsuarioService;
@@ -23,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioControllerImpl implements UsuarioController {
     private final UsuarioService usuarioService;
     private final ModelMapper modelMapper;
+
+    @Override
+    public TokenResponse login(UsuarioLoginDTO dto) {
+        return usuarioService.login(dto);
+    }
 
     @Override
     public UsuarioDTO register(RegisterUsuarioDTO dto) {

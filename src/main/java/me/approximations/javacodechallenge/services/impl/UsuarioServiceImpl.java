@@ -1,16 +1,17 @@
 package me.approximations.javacodechallenge.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import me.approximations.javacodechallenge.dtos.RegisterUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioDTO;
-import me.approximations.javacodechallenge.dtos.UpdateUsuarioPasswordDTO;
+import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
+import me.approximations.javacodechallenge.security.jwt.payload.JwtPayload;
+import me.approximations.javacodechallenge.security.jwt.service.JwtService;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,18 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
+    @Override
+    public TokenResponse login(UsuarioLoginDTO dto) {
+        final Usuario user = findByEmail(dto.email()).orElseThrow(() -> new NotFoundException("User not found."));
+
+        if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
+            throw new BadCredentialsException("Password does not match.");
+        }
+
+        return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
+    }
 
     @Override
     public Usuario register(RegisterUsuarioDTO dto) {
