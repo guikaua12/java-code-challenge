@@ -16,4 +16,9 @@ public class Departamento {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private final Long id;
     private String name;
+
+    public Departamento(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
