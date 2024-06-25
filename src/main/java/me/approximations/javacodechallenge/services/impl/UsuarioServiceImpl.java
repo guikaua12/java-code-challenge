@@ -38,7 +38,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario register(RegisterUsuarioDTO dto) {
-        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), dto.password());
+        final String encryptedPassword = passwordEncoder.encode(dto.password());
+
+        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword);
         return usuarioRepository.save(user);
     }
 
