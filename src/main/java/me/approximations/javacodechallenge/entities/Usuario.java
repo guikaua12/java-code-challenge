@@ -16,7 +16,7 @@ import me.approximations.javacodechallenge.enums.Cargo;
 @Table(name="usuarios")
 public class Usuario {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private final Long id;
+    private Long id;
     private String name;
     private String cpf;
     private String email;
