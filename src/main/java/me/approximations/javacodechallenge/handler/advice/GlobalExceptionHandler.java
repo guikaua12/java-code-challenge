@@ -34,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<Object> createCustomResponse(HttpStatusCode status, String message, Exception exception, WebRequest request) {
-        final CustomErrorResponse response = new CustomErrorResponse(status.value(), exception.getMessage());
+        final CustomErrorResponse response = new CustomErrorResponse(status.value(), message);
 
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
