@@ -10,7 +10,8 @@ public enum ErrorEnum {
     USER_NOT_FOUND(404, "Usuário não encontrado."),
     DEPARTMENT_NOT_FOUND(404, "Departamento não encontrado."),
     ROLE_NOT_FOUND(404, "Cargo não encontrado."),
-    BAD_PASSWORD(401, "Senha incorreta.");
+    BAD_PASSWORD(401, "Senha incorreta."),
+    EMAIL_ALREADY_EXISTS(409, "Esse e-mail já está cadastrado.");
 
     final int code;
     final HttpStatus statusCode = HttpStatus.valueOf(code);

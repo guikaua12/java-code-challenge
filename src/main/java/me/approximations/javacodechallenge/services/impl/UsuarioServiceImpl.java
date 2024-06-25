@@ -7,6 +7,7 @@ import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.enums.Cargo;
 import me.approximations.javacodechallenge.handler.enums.ErrorEnum;
 import me.approximations.javacodechallenge.handler.exception.DepartmentNotFoundException;
+import me.approximations.javacodechallenge.handler.exception.EmailAlreadyExistsException;
 import me.approximations.javacodechallenge.handler.exception.RoleNotFoundException;
 import me.approximations.javacodechallenge.handler.exception.UserNotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
@@ -48,6 +49,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public TokenResponse register(RegisterUsuarioDTO dto) {
+        checkEmailNotExists(dto.email());
+
         final String encryptedPassword = passwordEncoder.encode(dto.password());
 
         /* default role to ADMIN just to make it easier for those who are going to test the code later */
@@ -63,6 +66,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario create(CreateUsuarioDTO dto) {
+        checkEmailNotExists(dto.email());
+
         final Cargo role = Cargo.byName(dto.role());
 
         if (role == null) {
@@ -76,6 +81,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         user.setDepartment(department);
 
         return usuarioRepository.save(user);
+    }
+
+    private void checkEmailNotExists(String email) {
+        if (usuarioRepository.findByEmail(email).isEmpty()) return;
+
+        throw new EmailAlreadyExistsException();
     }
 
     private Departamento findDepartmentById(Long id) {
