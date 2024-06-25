@@ -1,4 +1,17 @@
 package me.approximations.javacodechallenge.dtos;
 
-public record UsuarioDTO(Long id, String name, String cpf, String email) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UsuarioDTO {
+    private Long id;
+    private String name;
+    private String cpf;
+    private String email;
 }
