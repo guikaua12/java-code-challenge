@@ -32,6 +32,10 @@ public class SecurityConfig {
             new PathMatcher(HttpMethod.GET, "/user/{id}"),
             new PathMatcher(HttpMethod.GET, "/department/"),
             new PathMatcher(HttpMethod.GET, "/department/{id}"),
+            /* swagger */
+            new PathMatcher(HttpMethod.GET, "/v3/api-docs/**"),
+            new PathMatcher(HttpMethod.GET, "/swagger-ui.html"),
+            new PathMatcher(HttpMethod.GET, "/swagger-ui/*"),
     };
 
     @Bean
