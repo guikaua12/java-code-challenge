@@ -11,6 +11,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 public interface UsuarioService extends UserDetailsService {
+    /**
+     * Autentica um usúario no sistema.
+     *
+     * @param dto Um objeto de transferência de dados contendo os detalhes do usuário a ser autenticado.
+     * @return Um objeto TokenResponse contendo um token JWT.
+     */
     TokenResponse login(UsuarioLoginDTO dto);
 
     /**
