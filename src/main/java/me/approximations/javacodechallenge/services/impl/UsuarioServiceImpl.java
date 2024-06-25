@@ -5,6 +5,7 @@ import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Departamento;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.enums.Cargo;
+import me.approximations.javacodechallenge.handler.enums.ErrorEnum;
 import me.approximations.javacodechallenge.handler.exception.DepartmentNotFoundException;
 import me.approximations.javacodechallenge.handler.exception.RoleNotFoundException;
 import me.approximations.javacodechallenge.handler.exception.UserNotFoundException;
@@ -39,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         final Usuario user = findByEmail(dto.email()).orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
-            throw new BadCredentialsException("Password does not match.");
+            throw new BadCredentialsException(ErrorEnum.BAD_PASSWORD.getMessage());
         }
 
         return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
@@ -65,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         final Cargo role = Cargo.byName(dto.role());
 
         if (role == null) {
-            throw new RoleNotFoundException("Role not found");
+            throw new RoleNotFoundException();
         }
 
         final String encryptedPassword = passwordEncoder.encode(dto.password());

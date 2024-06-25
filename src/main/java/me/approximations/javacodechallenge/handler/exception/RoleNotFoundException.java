@@ -1,13 +1,12 @@
 package me.approximations.javacodechallenge.handler.exception;
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import me.approximations.javacodechallenge.handler.enums.ErrorEnum;
 
 @Getter
-public class RoleNotFoundException extends StatusCodeException {
-    public static final HttpStatus STATUS = HttpStatus.UNPROCESSABLE_ENTITY;
+public class RoleNotFoundException extends NotFoundException {
 
-    public RoleNotFoundException(String message) {
-        super(STATUS, message);
+    public RoleNotFoundException() {
+        super(ErrorEnum.ROLE_NOT_FOUND.getMessage());
     }
 }
