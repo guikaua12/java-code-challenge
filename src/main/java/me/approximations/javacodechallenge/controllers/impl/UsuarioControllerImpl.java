@@ -32,6 +32,11 @@ public class UsuarioControllerImpl implements UsuarioController {
     }
 
     @Override
+    public UsuarioDTO create(CreateUsuarioDTO dto) {
+        return modelMapper.map(usuarioService.create(dto), UsuarioDTO.class);
+    }
+
+    @Override
     public Page<UsuarioDTO> getAll(Pageable pageable) {
         final Page<Usuario> users = usuarioService.getAll(pageable);
 

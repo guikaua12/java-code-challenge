@@ -28,6 +28,14 @@ public interface UsuarioService extends UserDetailsService {
     TokenResponse register(RegisterUsuarioDTO dto);
 
     /**
+     * Cria um novo usúario no sistema.
+     *
+     * @param dto Um objeto de transferência de dados contendo os detalhes do usuário a ser criado.
+     * @return Um objeto Usuario.
+     */
+    Usuario create(CreateUsuarioDTO dto);
+
+    /**
      * Recupera todos os usuários do sistema em um formato paginado.
      *
      * @param pageable Um objeto Pageable que fornece informações sobre o tamanho e o número da página a ser recuperada.

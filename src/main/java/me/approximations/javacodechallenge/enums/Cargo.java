@@ -10,4 +10,16 @@ public enum Cargo {
     ADMIN(2);
 
     final int id;
+
+    public static Cargo byName(String name) {
+        if (name == null) return null;
+
+        for (final Cargo value : Cargo.values()) {
+            if (value.name().equalsIgnoreCase(name)) {
+                return value;
+            }
+        }
+
+        return null;
+    }
 }

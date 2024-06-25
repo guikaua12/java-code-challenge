@@ -5,6 +5,7 @@ import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.enums.Cargo;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
+import me.approximations.javacodechallenge.handler.exception.RoleNotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
 import me.approximations.javacodechallenge.security.jwt.payload.JwtPayload;
@@ -46,6 +47,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(user);
 
         return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
+    }
+
+    @Override
+    public Usuario create(CreateUsuarioDTO dto) {
+        final Cargo role = Cargo.byName(dto.role());
+
+        if (role == null) {
+            throw new RoleNotFoundException("Role not found");
+        }
+
+        final String encryptedPassword = passwordEncoder.encode(dto.password());
+
+        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, role);
+        return usuarioRepository.save(user);
     }
 
     @Override

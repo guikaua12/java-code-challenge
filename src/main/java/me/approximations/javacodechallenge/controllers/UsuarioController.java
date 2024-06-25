@@ -14,6 +14,10 @@ public interface UsuarioController {
     @PostMapping("/register")
     TokenResponse register(@RequestBody @Valid RegisterUsuarioDTO dto);
 
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    UsuarioDTO create(@RequestBody @Valid CreateUsuarioDTO dto);
+
     @GetMapping("/")
     Page<UsuarioDTO> getAll(Pageable pageable);
 
