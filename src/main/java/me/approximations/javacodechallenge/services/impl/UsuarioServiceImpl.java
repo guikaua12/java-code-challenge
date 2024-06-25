@@ -3,6 +3,7 @@ package me.approximations.javacodechallenge.services.impl;
 import lombok.RequiredArgsConstructor;
 import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
+import me.approximations.javacodechallenge.enums.Cargo;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
@@ -40,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public TokenResponse register(RegisterUsuarioDTO dto) {
         final String encryptedPassword = passwordEncoder.encode(dto.password());
 
-        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword);
+        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, Cargo.MEMBER);
         usuarioRepository.save(user);
 
         return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
