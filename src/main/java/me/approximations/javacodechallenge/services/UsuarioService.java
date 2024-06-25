@@ -17,9 +17,9 @@ public interface UsuarioService extends UserDetailsService {
      * Registra um novo usúario no sistema.
      *
      * @param dto Um objeto de transferência de dados contendo os detalhes do usuário a ser registrado.
-     * @return Um objeto contendo os detalhes do usuário recém-registrado.
+     * @return Um objeto TokenResponse contendo um token JWT.
      */
-    Usuario register(RegisterUsuarioDTO dto);
+    TokenResponse register(RegisterUsuarioDTO dto);
 
     /**
      * Recupera todos os usuários do sistema em um formato paginado.

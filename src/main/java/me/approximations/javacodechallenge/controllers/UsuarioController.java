@@ -11,7 +11,7 @@ public interface UsuarioController {
     TokenResponse login(@RequestBody @Valid UsuarioLoginDTO dto);
 
     @PostMapping("/register")
-    UsuarioDTO register(@RequestBody @Valid RegisterUsuarioDTO dto);
+    TokenResponse register(@RequestBody @Valid RegisterUsuarioDTO dto);
 
     @GetMapping("/")
     Page<UsuarioDTO> getAll(Pageable pageable);

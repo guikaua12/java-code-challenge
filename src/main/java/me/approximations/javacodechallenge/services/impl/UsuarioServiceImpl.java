@@ -37,11 +37,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario register(RegisterUsuarioDTO dto) {
+    public TokenResponse register(RegisterUsuarioDTO dto) {
         final String encryptedPassword = passwordEncoder.encode(dto.password());
 
         final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword);
-        return usuarioRepository.save(user);
+        usuarioRepository.save(user);
+
+        return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
     }
 
     @Override

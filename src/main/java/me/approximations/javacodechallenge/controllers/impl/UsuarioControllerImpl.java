@@ -27,10 +27,8 @@ public class UsuarioControllerImpl implements UsuarioController {
     }
 
     @Override
-    public UsuarioDTO register(RegisterUsuarioDTO dto) {
-        final Usuario user = usuarioService.register(dto);
-
-        return modelMapper.map(user, UsuarioDTO.class);
+    public TokenResponse register(RegisterUsuarioDTO dto) {
+        return usuarioService.register(dto);
     }
 
     @Override
