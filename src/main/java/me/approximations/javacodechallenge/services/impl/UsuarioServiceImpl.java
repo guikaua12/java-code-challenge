@@ -8,8 +8,10 @@ import me.approximations.javacodechallenge.handler.exception.NotFoundException;
 import me.approximations.javacodechallenge.handler.exception.RoleNotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
+import me.approximations.javacodechallenge.security.UserAdminRoleChecker;
 import me.approximations.javacodechallenge.security.jwt.payload.JwtPayload;
 import me.approximations.javacodechallenge.security.jwt.service.JwtService;
+import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final UserAdminRoleChecker userAdminRoleChecker;
 
     @Override
     public TokenResponse login(UsuarioLoginDTO dto) {
@@ -79,18 +82,22 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario update(UpdateUsuarioDTO dto) {
+    public Usuario update(UpdateUsuarioDTO dto, JwtAuthenticationToken authentication) {
+        userAdminRoleChecker.checkUserPermission(dto.id(), authentication);
+
         final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
 
-        user.setName(dto.name());
-        user.setCpf(dto.cpf());
-        user.setEmail(dto.email());
+        if (dto.name() != null) user.setName(dto.name());
+        if (dto.cpf() != null) user.setCpf(dto.cpf());
+        if (dto.email() != null) user.setEmail(dto.email());
 
         return usuarioRepository.save(user);
     }
 
     @Override
-    public Usuario updatePassword(UpdateUsuarioPasswordDTO dto) {
+    public Usuario updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication) {
+        userAdminRoleChecker.checkUserPermission(dto.id(), authentication);
+
         final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
 
         user.setPassword(passwordEncoder.encode(dto.password()));

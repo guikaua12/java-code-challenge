@@ -3,6 +3,7 @@ package me.approximations.javacodechallenge.services;
 import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
+import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -65,7 +66,7 @@ public interface UsuarioService extends UserDetailsService {
      * @param dto Um objeto de transferência de dados contendo os novos detalhes do usuário.
      * @return Um objeto contendo os detalhes do usuário atualizado.
      */
-    Usuario update(UpdateUsuarioDTO dto);
+    Usuario update(UpdateUsuarioDTO dto, JwtAuthenticationToken authentication);
 
     /**
      * Atualiza a senha de um usuário existente.
@@ -73,7 +74,7 @@ public interface UsuarioService extends UserDetailsService {
      * @param dto Um objeto de transferência de dados contendo a nova senha do usuário.
      * @return Um objeto contendo os detalhes do usuário com a senha atualizada.
      */
-    Usuario updatePassword(UpdateUsuarioPasswordDTO dto);
+    Usuario updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication);
 
     /**
      * Deleta um usuário existente.

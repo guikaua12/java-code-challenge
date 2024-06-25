@@ -2,6 +2,7 @@ package me.approximations.javacodechallenge.controllers;
 
 import jakarta.validation.Valid;
 import me.approximations.javacodechallenge.dtos.*;
+import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,10 +26,10 @@ public interface UsuarioController {
     UsuarioDTO findById(@PathVariable("id") Long id);
 
     @PatchMapping("/")
-    UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto);
+    UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto, JwtAuthenticationToken authentication);
 
     @PatchMapping("/password")
-    UsuarioDTO updatePassword(UpdateUsuarioPasswordDTO dto);
+    UsuarioDTO updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication);
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")

@@ -6,6 +6,7 @@ import me.approximations.javacodechallenge.controllers.UsuarioController;
 import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.handler.exception.NotFoundException;
+import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -51,17 +52,20 @@ public class UsuarioControllerImpl implements UsuarioController {
     }
 
     @Override
-    public UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto) {
-        return modelMapper.map(usuarioService.update(dto), UsuarioDTO.class);
+    public UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto, JwtAuthenticationToken authentication) {
+
+
+        return modelMapper.map(usuarioService.update(dto, authentication), UsuarioDTO.class);
     }
 
     @Override
-    public UsuarioDTO updatePassword(UpdateUsuarioPasswordDTO dto) {
-        return modelMapper.map(usuarioService.updatePassword(dto), UsuarioDTO.class);
+    public UsuarioDTO updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication) {
+        return modelMapper.map(usuarioService.updatePassword(dto, authentication), UsuarioDTO.class);
     }
 
     @Override
     public void delete(Long id) {
         usuarioService.delete(id);
     }
+
 }
