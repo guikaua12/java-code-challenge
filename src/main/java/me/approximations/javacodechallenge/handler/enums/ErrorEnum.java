@@ -14,8 +14,11 @@ public enum ErrorEnum {
     EMAIL_ALREADY_EXISTS(409, "Esse e-mail já está cadastrado.");
 
     final int code;
-    final HttpStatus statusCode = HttpStatus.valueOf(code);
     final String message;
+
+    public HttpStatus getStatusCode() {
+        return HttpStatus.valueOf(code);
+    }
 
     public static final String INVALID_CPF_MESSAGE = "CPF inválido.";
     public static final String INVALID_EMAIL_MESSAGE = "Email inválido.";
