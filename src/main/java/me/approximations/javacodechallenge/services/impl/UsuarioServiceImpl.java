@@ -41,7 +41,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     public TokenResponse register(RegisterUsuarioDTO dto) {
         final String encryptedPassword = passwordEncoder.encode(dto.password());
 
-        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, Cargo.MEMBER);
+        /* default role to ADMIN just to make it easier for those who are going to test the code later */
+        final Usuario user = new Usuario(null, dto.name(), dto.cpf(), dto.email(), encryptedPassword, Cargo.ADMIN);
         usuarioRepository.save(user);
 
         return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
