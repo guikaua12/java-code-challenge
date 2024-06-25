@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.approximations.javacodechallenge.controllers.UsuarioController;
 import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Usuario;
-import me.approximations.javacodechallenge.handler.exception.NotFoundException;
+import me.approximations.javacodechallenge.handler.exception.UserNotFoundException;
 import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import me.approximations.javacodechallenge.services.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -46,7 +46,7 @@ public class UsuarioControllerImpl implements UsuarioController {
 
     @Override
     public UsuarioDTO findById(Long id) {
-        final Usuario user = usuarioService.findById(id).orElseThrow(() -> new NotFoundException("User not found."));
+        final Usuario user = usuarioService.findById(id).orElseThrow(UserNotFoundException::new);
 
         return modelMapper.map(user, UsuarioDTO.class);
     }

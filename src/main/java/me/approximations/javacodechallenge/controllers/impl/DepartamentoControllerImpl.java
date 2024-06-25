@@ -3,7 +3,7 @@ package me.approximations.javacodechallenge.controllers.impl;
 import lombok.RequiredArgsConstructor;
 import me.approximations.javacodechallenge.controllers.DepartamentoController;
 import me.approximations.javacodechallenge.entities.Departamento;
-import me.approximations.javacodechallenge.handler.exception.NotFoundException;
+import me.approximations.javacodechallenge.handler.exception.DepartmentNotFoundException;
 import me.approximations.javacodechallenge.services.DepartamentoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +23,6 @@ public class DepartamentoControllerImpl implements DepartamentoController {
 
     @Override
     public Departamento findById(Long id) {
-        return departmentService.findById(id).orElseThrow(() -> new NotFoundException("Department not found."));
+        return departmentService.findById(id).orElseThrow(DepartmentNotFoundException::new);
     }
 }

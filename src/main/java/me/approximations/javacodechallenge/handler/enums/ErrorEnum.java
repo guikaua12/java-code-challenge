@@ -1,10 +1,13 @@
 package me.approximations.javacodechallenge.handler.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public enum ErrorEnum {
-    USER_NOT_FOUND(404, "Usuário não encontrado.");
+    USER_NOT_FOUND(404, "Usuário não encontrado."),
+    DEPARTMENT_NOT_FOUND(404, "Departamento não encontrado.");
 
     final int code;
     final String message;

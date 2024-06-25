@@ -5,8 +5,9 @@ import me.approximations.javacodechallenge.dtos.*;
 import me.approximations.javacodechallenge.entities.Departamento;
 import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.enums.Cargo;
-import me.approximations.javacodechallenge.handler.exception.NotFoundException;
+import me.approximations.javacodechallenge.handler.exception.DepartmentNotFoundException;
 import me.approximations.javacodechallenge.handler.exception.RoleNotFoundException;
+import me.approximations.javacodechallenge.handler.exception.UserNotFoundException;
 import me.approximations.javacodechallenge.repositories.UsuarioRepository;
 import me.approximations.javacodechallenge.security.CustomUserDetails;
 import me.approximations.javacodechallenge.security.UserAdminRoleChecker;
@@ -35,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public TokenResponse login(UsuarioLoginDTO dto) {
-        final Usuario user = findByEmail(dto.email()).orElseThrow(() -> new NotFoundException("User not found."));
+        final Usuario user = findByEmail(dto.email()).orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
             throw new BadCredentialsException("Password does not match.");
@@ -79,7 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private Departamento findDepartmentById(Long id) {
         if (id == null) return null;
 
-        return departmentService.findById(id).orElseThrow(() -> new NotFoundException("Department not found"));
+        return departmentService.findById(id).orElseThrow(DepartmentNotFoundException::new);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario update(UpdateUsuarioDTO dto, JwtAuthenticationToken authentication) {
         userAdminRoleChecker.checkUserPermission(dto.id(), authentication);
 
-        final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
+        final Usuario user = findById(dto.id()).orElseThrow(UserNotFoundException::new);
 
         if (dto.name() != null) user.setName(dto.name());
         if (dto.cpf() != null) user.setCpf(dto.cpf());
@@ -114,7 +115,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario updatePassword(UpdateUsuarioPasswordDTO dto, JwtAuthenticationToken authentication) {
         userAdminRoleChecker.checkUserPermission(dto.id(), authentication);
 
-        final Usuario user = findById(dto.id()).orElseThrow(() -> new NotFoundException("User not found."));
+        final Usuario user = findById(dto.id()).orElseThrow(UserNotFoundException::new);
 
         user.setPassword(passwordEncoder.encode(dto.password()));
 
@@ -123,7 +124,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void delete(Long id) {
-        final Usuario user = findById(id).orElseThrow(() -> new NotFoundException("User not found."));
+        final Usuario user = findById(id).orElseThrow(UserNotFoundException::new);
         usuarioRepository.delete(user);
     }
 
