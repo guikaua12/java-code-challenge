@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -320,6 +320,19 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("$.id", is(2)));
 
         assertEquals("changed_password", savedPassword.get());
+    }
+
+    /* delete */
+    @Test
+    @WithMockUser(roles="ADMIN")
+    public void shouldDelete() throws Exception {
+        Usuario user = new Usuario(2L, "Test", "634.534.427-33", "test@test.com", "password", Cargo.MEMBER);
+        when(usuarioRepository.findById(2L)).thenReturn(Optional.of(user));
+
+        mockMvc.perform(delete("/user/{id}", 2L)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        verify(usuarioRepository, times(1)).delete(user);
     }
 
 }
