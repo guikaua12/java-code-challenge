@@ -1,0 +1,24 @@
+<div class="px-6 py-4 w-full">
+  <h2 class="text-lg font-medium mb-4">Delete file</h2>
+
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <app-input type="text" placeholder="Digite seu nome" label="Nome" formControlName="name" ngClass="mb-2" />
+    <app-input type="text" placeholder="Digite seu CPF" label="CPF" formControlName="cpf" ngClass="mb-2" />
+    <app-input type="email" placeholder="Digite seu e-mail" label="Senha" formControlName="email" ngClass="mb-2 mb-4" />
+
+    <div class="flex justify-between">
+      <app-button variant="danger" class="font-medium" (click)="deleteUser()">
+        <mat-icon class="text-md">delete</mat-icon>
+        Deletar usuário
+      </app-button>
+      <div class="flex gap-2">
+        <app-button mat-dialog-close variant="secondary">Cancelar</app-button>
+        <app-button variant="primary" type="submit">Atualizar</app-button>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>

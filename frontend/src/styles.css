@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --mdc-dialog-container-shape: 10px;
+  --mdc-dialog-container-color: #FFF;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 html, body {
   min-height: 100vh;
 }
