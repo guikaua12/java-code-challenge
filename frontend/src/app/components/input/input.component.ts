@@ -43,16 +43,10 @@ export class InputComponent implements ControlValueAccessor {
   private onTouch = noop;
 
   writeValue(obj: any): void {
-    // If the new value is same as the current value we do nothing.
-    // We don't wanna re-render the component.
-    // It is just performance optimalisation
     if (obj === this.value)
       return;
 
-    // store the new value in the class level variable
     this.value = obj;
-    // notify the rendering engine the component change have to re-render
-    // this._cdRef.markForCheck();
   }
 
   registerOnChange(fn: any): void {
