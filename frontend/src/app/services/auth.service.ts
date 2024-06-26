@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environment/environment';
 import { User } from '../types/User';
-import { CookieService } from 'ngx-cookie-service';
 import { tap } from 'rxjs';
 import { GlobalVariablesService } from './global-variables.service';
+import { Router } from '@angular/router';
 
 const API_URL = environment.API;
 const TOKEN = 'token';
@@ -44,8 +44,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService,
     private globalVariablesService: GlobalVariablesService,
+    private router: Router,
   ) {
   }
 
@@ -55,7 +55,7 @@ export class AuthService {
       password,
     }).pipe(
       tap((response: LoginResponse) => {
-        this.cookieService.set(TOKEN, response.token.token, new Date(response.token.expiresIn));
+        localStorage.setItem(TOKEN, response.token.token);
         this.globalVariablesService.updateUser(response.user);
       }),
     );
@@ -65,29 +65,34 @@ export class AuthService {
     return this.http.post<LoginResponse>(API_URL + '/user/register', data)
       .pipe(
         tap((response: LoginResponse) => {
-          this.cookieService.set(TOKEN, response.token.token, new Date(response.token.expiresIn));
+          localStorage.setItem(TOKEN, response.token.token);
           this.globalVariablesService.updateUser(response.user);
         }),
       );
   }
 
   logout(): void {
-    this.cookieService.delete(TOKEN);
+    localStorage.removeItem(TOKEN);
     this.globalVariablesService.updateUser(null);
   }
 
-  getToken(): string {
-    return this.cookieService.get(TOKEN);
+  getToken(): string | null {
+    return localStorage.getItem(TOKEN);
   }
 
   initialUserFetch() {
-    this.http.get<User>(API_URL + '/user/token')
-      .subscribe(user => this.globalVariablesService.updateUser(user),
-        () => {
-          this.globalVariablesService.updateUser(null);
-          this.cookieService.delete(TOKEN);
+    return this.http.get<User>(API_URL + '/user/token')
+      .subscribe({
+        next: user => {
+          console.log(user);
+          this.router.navigate(['/']);
+          this.globalVariablesService.updateUser(user);
         },
-      );
+        error: () => {
+          this.globalVariablesService.clearLoggedUser();
+          localStorage.removeItem(TOKEN);
+        },
+      });
   }
 }
 
