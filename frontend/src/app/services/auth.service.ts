@@ -55,7 +55,7 @@ export class AuthService {
       password,
     }).pipe(
       tap((response: LoginResponse) => {
-        this.cookieService.set(TOKEN, JSON.stringify(response.token.token));
+        this.cookieService.set(TOKEN, response.token.token, new Date(response.token.expiresIn));
         this.globalVariablesService.updateUser(response.user);
       }),
     );
@@ -65,7 +65,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(API_URL + '/user/register', data)
       .pipe(
         tap((response: LoginResponse) => {
-          this.cookieService.set(TOKEN, JSON.stringify(response.token.token));
+          this.cookieService.set(TOKEN, response.token.token, new Date(response.token.expiresIn));
           this.globalVariablesService.updateUser(response.user);
         }),
       );
