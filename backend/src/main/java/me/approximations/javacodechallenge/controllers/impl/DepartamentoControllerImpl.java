@@ -7,12 +7,14 @@ import me.approximations.javacodechallenge.handler.exception.DepartmentNotFoundE
 import me.approximations.javacodechallenge.services.DepartamentoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/department")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class DepartamentoControllerImpl implements DepartamentoController {
     private final DepartamentoService departmentService;
 
