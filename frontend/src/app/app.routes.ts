@@ -25,6 +25,5 @@ export const routes: Routes = [
         loadComponent: () => import('./views/auth/register/register.component').then(c => c.RegisterComponent),
       },
     ],
-    // loadComponent: () => import('./views/auth/login/login.component').then(c => c.RegisterComponent),
   },
 ];
