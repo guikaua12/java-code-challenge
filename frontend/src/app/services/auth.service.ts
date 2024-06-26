@@ -14,12 +14,12 @@ export type LoginRequest = {
   password: string;
 }
 
-type RegisterRequest = {
+export type RegisterRequest = {
   name: string,
   cpf: string,
   email: string,
   password: string,
-  departmentId: number
+  departmentId?: number
 }
 
 type LoginResponse = {

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { AuthComponent } from './views/auth/auth.component';
+import { RegisterComponent } from './views/auth/register/register.component';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: AuthComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
     ],
-    // loadComponent: () => import('./views/auth/login/login.component').then(c => c.LoginComponent),
+    // loadComponent: () => import('./views/auth/login/login.component').then(c => c.RegisterComponent),
   },
 ];
