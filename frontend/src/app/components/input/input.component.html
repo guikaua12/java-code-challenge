@@ -1,6 +1,10 @@
-<input
-  [type]="type"
-  [placeholder]="placeholder"
-  [formControlName]="formControlName"
-  [ngClass]="twMerge('border border-zinc-300 rounded-md p-2 w-full outline-gray-500', ngClass)"
->
+<label>
+  <span class="ml-0.5 block text-sm text-zinc-900">{{ label }}</span>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControlName]="formControlName"
+    [ngClass]="twMerge('border border-zinc-300 rounded-md p-2 w-full outline-gray-500', ngClass)"
+  >
+</label>
+
