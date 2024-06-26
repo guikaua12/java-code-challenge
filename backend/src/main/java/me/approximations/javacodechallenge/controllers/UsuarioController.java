@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import me.approximations.javacodechallenge.dtos.*;
+import me.approximations.javacodechallenge.entities.Usuario;
 import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,14 @@ public interface UsuarioController {
     })
     @GetMapping("/{id}")
     UsuarioDTO findById(@PathVariable("id") Long id);
+
+    @Operation(summary = "Retorna um usuário pelo seu token.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna o usuário"),
+            @ApiResponse(responseCode = "403", description = "Código inválido"),
+    })
+    @GetMapping("/token")
+    Usuario findByToken(@RequestHeader("Authorization") String token);
 
     @Operation(summary="Atualiza os dados de um usuário.")
     @ApiResponses(value={

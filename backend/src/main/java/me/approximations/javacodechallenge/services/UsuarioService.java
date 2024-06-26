@@ -60,6 +60,8 @@ public interface UsuarioService extends UserDetailsService {
      */
     Optional<Usuario> findByEmail(String email);
 
+    Usuario findByToken(String token);
+
     /**
      * Atualiza um usuário existente.
      *

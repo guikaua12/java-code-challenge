@@ -119,6 +119,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public Usuario findByToken(String token) {
+        token = token.replace("Bearer ", "");
+        JwtPayload payload = jwtService.decode(token);
+
+        return usuarioRepository.findById(payload.id()).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
     public Usuario update(UpdateUsuarioDTO dto, JwtAuthenticationToken authentication) {
         userAdminRoleChecker.checkUserPermission(dto.id(), authentication);
 

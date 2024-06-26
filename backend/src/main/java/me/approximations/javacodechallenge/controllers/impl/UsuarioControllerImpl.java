@@ -54,6 +54,11 @@ public class UsuarioControllerImpl implements UsuarioController {
     }
 
     @Override
+    public Usuario findByToken(String token) {
+        return usuarioService.findByToken(token);
+    }
+
+    @Override
     public UsuarioDTO update(@RequestBody @Valid UpdateUsuarioDTO dto, JwtAuthenticationToken authentication) {
 
 
