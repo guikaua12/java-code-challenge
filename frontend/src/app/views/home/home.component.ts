@@ -1,12 +1,14 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
-import { NgForOf, NgStyle } from '@angular/common';
+import { NgForOf, NgIf, NgStyle } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from '../../types/User';
 import { UserComponent } from '../../components/user/user.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { MatIcon } from '@angular/material/icon';
+import { Page } from '../../types/Page';
+import { GlobalVariablesService } from '../../services/global-variables.service';
 
 @Component({
   selector: 'app-home',
@@ -19,20 +21,21 @@ import { MatIcon } from '@angular/material/icon';
     ButtonComponent,
     MatIcon,
     NgStyle,
+    NgIf,
   ],
 })
 export class HomeComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
-  usersList: User[] = [];
+  users: Page<User> | null;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private globalVariablesService: GlobalVariablesService) {
   }
 
   ngOnInit(): void {
-    this.userService.listUsers()
+    this.globalVariablesService.users$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(users => this.usersList = users.content);
+      .subscribe(users => this.users = users);
   }
 
 }

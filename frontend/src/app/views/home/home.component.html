@@ -13,8 +13,10 @@
       </app-button>
     </div>
 
-    <div *ngFor="let user of usersList" class="flex flex-col">
-      <app-user [user]="user"></app-user>
+    <div *ngIf="!!users">
+      <div *ngFor="let user of users.content" class="flex flex-col">
+        <app-user [user]="user"></app-user>
+      </div>
     </div>
 
   </div>
