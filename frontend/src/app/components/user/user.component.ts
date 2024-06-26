@@ -12,7 +12,4 @@ import { RouterLink } from '@angular/router';
 })
 export class UserComponent {
   @Input() user: User;
-
-  constructor() {
-  }
 }
