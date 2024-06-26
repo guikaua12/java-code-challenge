@@ -29,7 +29,7 @@ export class ButtonComponent {
   protected readonly twMerge = twMerge;
   protected readonly buttonVariants: { [k in ButtonVariant]: string } = {
     primary: 'text-sm hover:bg-zinc-700 bg-neutral-900',
-    secondary: 'bg-white border border-zinc-300 text-neutral-700 hover:bg-opacity-10',
+    secondary: 'bg-white border border-zinc-300 text-neutral-700 hover:bg-zinc-100',
     danger: 'bg-red-200 text-red-600 hover:bg-red-300',
   };
 }
