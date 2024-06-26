@@ -5,6 +5,8 @@
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="flex flex-col">
       <app-input type="email" placeholder="Digite seu e-mail" formControlName="email" ngClass="mb-2" />
       <app-input type="password" placeholder="Digite sua senha" formControlName="password" ngClass="mb-2" />
+      <a routerLink="/auth/register" class="text-sm mb-2">Não tem uma conta? <span
+        class="text-blue-600 text-sm font-medium">Cadastrar</span></a>
       <app-button type="submit">Login</app-button>
     </form>
   </main>

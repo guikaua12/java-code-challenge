@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { InputComponent } from '../../../components/input/input.component';
 import { ButtonComponent } from '../../../components/button/button.component';
 import { AuthService, LoginRequest } from '../../../services/auth.service';
@@ -14,6 +14,7 @@ import { AuthService, LoginRequest } from '../../../services/auth.service';
     InputComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
 })
