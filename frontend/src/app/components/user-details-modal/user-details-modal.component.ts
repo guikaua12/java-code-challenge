@@ -14,19 +14,21 @@ import { ButtonComponent } from '../button/button.component';
 import { MatIcon } from '@angular/material/icon';
 import { User } from '../../types/User';
 import { UserService } from '../../services/user.service';
+import { NgIf } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-details-modal',
   standalone: true,
   templateUrl: './user-details-modal.component.html',
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, InputComponent, ReactiveFormsModule, ButtonComponent, MatIcon],
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, InputComponent, ReactiveFormsModule, ButtonComponent, MatIcon, NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserDetailsModalComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<UserDetailsModalComponent>);
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: User, private userService: UserService) {
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: User, private userService: UserService, protected authService: AuthService) {
   }
 
   ngOnInit(): void {

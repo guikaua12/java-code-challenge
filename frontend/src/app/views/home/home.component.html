@@ -5,7 +5,7 @@
     <div class="flex justify-between mb-5">
       <h1 class="text-2xl font-semibold mb-0.5">Listagem de usuários</h1>
 
-      <app-button variant="primary">
+      <app-button *ngIf="authService.isAdmin()" variant="primary">
         <mat-icon>add</mat-icon>
         <span>
           Criar usuário

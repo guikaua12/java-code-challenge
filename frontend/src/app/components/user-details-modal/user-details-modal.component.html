@@ -8,13 +8,13 @@
     <app-input type="email" placeholder="Digite seu e-mail" label="Senha" formControlName="email" ngClass="mb-2 mb-4" />
 
     <div class="flex justify-between">
-      <app-button variant="danger" class="font-medium" (click)="deleteUser()">
+      <app-button *ngIf="authService.isAdmin()" variant="danger" class="font-medium" (click)="deleteUser()">
         <mat-icon class="text-md">delete</mat-icon>
         Deletar usuário
       </app-button>
       <div class="flex gap-2">
         <app-button mat-dialog-close variant="secondary">Cancelar</app-button>
-        <app-button variant="primary" type="submit">Atualizar</app-button>
+        <app-button *ngIf="authService.isAdmin()" variant="primary" type="submit">Atualizar</app-button>
       </div>
     </div>
 

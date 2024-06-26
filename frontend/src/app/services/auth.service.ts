@@ -94,5 +94,9 @@ export class AuthService {
         },
       });
   }
+
+  isAdmin(): boolean {
+    return this.globalVariablesService.getLoggedUser()?.role === 'ADMIN';
+  }
 }
 

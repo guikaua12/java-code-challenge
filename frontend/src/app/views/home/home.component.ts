@@ -9,6 +9,7 @@ import { ButtonComponent } from '../../components/button/button.component';
 import { MatIcon } from '@angular/material/icon';
 import { Page } from '../../types/Page';
 import { GlobalVariablesService } from '../../services/global-variables.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   users: Page<User> | null;
 
-  constructor(private userService: UserService, private globalVariablesService: GlobalVariablesService) {
+  constructor(private userService: UserService, protected authService: AuthService, private globalVariablesService: GlobalVariablesService) {
   }
 
   ngOnInit(): void {
