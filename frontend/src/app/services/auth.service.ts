@@ -9,7 +9,7 @@ import { GlobalVariablesService } from './global-variables.service';
 const API_URL = environment.API;
 const TOKEN = 'token';
 
-type LoginRequest = {
+export type LoginRequest = {
   email: string;
   password: string;
 }
