@@ -79,5 +79,15 @@ export class AuthService {
   getToken(): string {
     return this.cookieService.get(TOKEN);
   }
+
+  initialUserFetch() {
+    this.http.get<User>(API_URL + '/user/token')
+      .subscribe(user => this.globalVariablesService.updateUser(user),
+        () => {
+          this.globalVariablesService.updateUser(null);
+          this.cookieService.delete(TOKEN);
+        },
+      );
+  }
 }
 
