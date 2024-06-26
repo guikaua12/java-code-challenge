@@ -1,0 +1,6 @@
+<div *ngIf="!!loggedUser" class="flex gap-2">
+  <p>{{ loggedUser.name }}</p>
+  <mat-icon>account_circle</mat-icon>
+</div>
+
+<a *ngIf="!loggedUser" routerLink="/auth/login" class="text-blue-600">Login</a>
