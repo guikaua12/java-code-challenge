@@ -1,4 +1,21 @@
-<!--<app-header></app-header>-->
-<div>
-  HOME
+<app-header></app-header>
+
+<div class="container mx-auto mt-8">
+  <div class="p-8 bg-white rounded-md">
+    <div class="flex justify-between mb-5">
+      <h1 class="text-2xl font-semibold mb-0.5">Listagem de usuários</h1>
+
+      <app-button ngClass="text-sm px-4 py-2 hover:bg-zinc-700 flex gap-2 items-center outline-0">
+        <mat-icon>add</mat-icon>
+        <span>
+          Criar usuário
+        </span>
+      </app-button>
+    </div>
+
+    <div *ngFor="let user of usersList" class="flex flex-col">
+      <app-user [user]="user"></app-user>
+    </div>
+
+  </div>
 </div>
