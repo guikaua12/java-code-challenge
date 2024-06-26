@@ -8,6 +8,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { noop } from 'rxjs';
+import { twMerge } from 'tailwind-merge';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-input',
@@ -16,6 +18,7 @@ import { noop } from 'rxjs';
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    NgClass,
   ],
   providers: [
     {
@@ -36,8 +39,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type? = 'text';
   @Input() label?: string = '';
   @Input() formControlName: string | number | null = '';
+  @Input() ngClass = '';
   value?: string;
   isDisabled = false;
+
 
   protected onChange = noop;
   private onTouch = noop;
@@ -61,4 +66,5 @@ export class InputComponent implements ControlValueAccessor {
     this.isDisabled = isDisabled;
   }
 
+  protected readonly twMerge = twMerge;
 }
