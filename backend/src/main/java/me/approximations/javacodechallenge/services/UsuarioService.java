@@ -18,7 +18,7 @@ public interface UsuarioService extends UserDetailsService {
      * @param dto Um objeto de transferência de dados contendo os detalhes do usuário a ser autenticado.
      * @return Um objeto TokenResponse contendo um token JWT.
      */
-    TokenResponse login(UsuarioLoginDTO dto);
+    LoginResponse login(UsuarioLoginDTO dto);
 
     /**
      * Registra um novo usúario no sistema.
@@ -26,7 +26,7 @@ public interface UsuarioService extends UserDetailsService {
      * @param dto Um objeto de transferência de dados contendo os detalhes do usuário a ser registrado.
      * @return Um objeto TokenResponse contendo um token JWT.
      */
-    TokenResponse register(RegisterUsuarioDTO dto);
+    LoginResponse register(RegisterUsuarioDTO dto);
 
     /**
      * Cria um novo usúario no sistema.

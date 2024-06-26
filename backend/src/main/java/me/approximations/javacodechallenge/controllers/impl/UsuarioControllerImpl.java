@@ -25,12 +25,12 @@ public class UsuarioControllerImpl implements UsuarioController {
     private final ModelMapper modelMapper;
 
     @Override
-    public TokenResponse login(UsuarioLoginDTO dto) {
+    public LoginResponse login(UsuarioLoginDTO dto) {
         return usuarioService.login(dto);
     }
 
     @Override
-    public TokenResponse register(RegisterUsuarioDTO dto) {
+    public LoginResponse register(RegisterUsuarioDTO dto) {
         return usuarioService.register(dto);
     }
 

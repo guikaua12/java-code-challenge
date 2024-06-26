@@ -18,6 +18,7 @@ import me.approximations.javacodechallenge.security.jwt.service.JwtService;
 import me.approximations.javacodechallenge.security.jwt.token.JwtAuthenticationToken;
 import me.approximations.javacodechallenge.services.DepartamentoService;
 import me.approximations.javacodechallenge.services.UsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,20 +36,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final JwtService jwtService;
     private final UserAdminRoleChecker userAdminRoleChecker;
     private final DepartamentoService departmentService;
+    private final ModelMapper modelMapper;
 
     @Override
-    public TokenResponse login(UsuarioLoginDTO dto) {
+    public LoginResponse login(UsuarioLoginDTO dto) {
         final Usuario user = findByEmail(dto.email()).orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(dto.password(), user.getPassword())) {
             throw new BadCredentialsException(ErrorEnum.BAD_PASSWORD.getMessage());
         }
 
-        return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
+        return new LoginResponse(
+                jwtService.encode(new JwtPayload(user.getId(), user.getEmail())),
+                modelMapper.map(user, UsuarioDTO.class)
+        );
     }
 
     @Override
-    public TokenResponse register(RegisterUsuarioDTO dto) {
+    public LoginResponse register(RegisterUsuarioDTO dto) {
         checkEmailNotExists(dto.email());
 
         final String encryptedPassword = passwordEncoder.encode(dto.password());
@@ -61,7 +66,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuarioRepository.save(user);
 
-        return jwtService.encode(new JwtPayload(user.getId(), user.getEmail()));
+        return new LoginResponse(
+                jwtService.encode(new JwtPayload(user.getId(), user.getEmail())),
+                modelMapper.map(user, UsuarioDTO.class)
+        );
     }
 
     @Override
