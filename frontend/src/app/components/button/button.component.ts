@@ -13,7 +13,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'danger';
   ],
   template: `
     <button [type]="type" [disabled]="disabled"
-            [ngClass]="twMerge('w-full flex items-center text-sm outline-0 gap-2 rounded-md text-white px-4 py-2', buttonVariants[variant], ngClass)"
+            [ngClass]="twMerge('w-full flex items-center text-sm outline-0 gap-2 rounded-md text-white px-4 py-2 justify-center', buttonVariants[variant], ngClass)"
             (click)="onClick()">
       <ng-content></ng-content>
     </button>
