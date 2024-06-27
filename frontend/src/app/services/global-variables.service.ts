@@ -30,6 +30,14 @@ export class GlobalVariablesService {
     this.users.next(users);
   }
 
+  addUserToList(user: User): void {
+    const users = this.getUsers();
+    if (users) {
+      users.content.push(user);
+      this.updateUsers(users);
+    }
+  }
+
   updateUserInList(user: User): void {
     const users = this.getUsers();
     if (users) {

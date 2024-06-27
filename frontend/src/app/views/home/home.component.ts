@@ -10,6 +10,8 @@ import { MatIcon } from '@angular/material/icon';
 import { Page } from '../../types/Page';
 import { GlobalVariablesService } from '../../services/global-variables.service';
 import { AuthService } from '../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateUserModalComponent } from '../../components/create-user-modal/create-user-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -27,8 +29,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
-
   users: Page<User> | null;
+  dialog = inject(MatDialog);
 
   constructor(private userService: UserService, protected authService: AuthService, private globalVariablesService: GlobalVariablesService) {
   }
@@ -37,6 +39,14 @@ export class HomeComponent implements OnInit {
     this.globalVariablesService.users$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(users => this.users = users);
+  }
+
+  openCreateUserDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CreateUserModalComponent, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
 }

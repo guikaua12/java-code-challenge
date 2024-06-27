@@ -1,0 +1,59 @@
+<div class="px-6 py-4 w-full">
+  <h2 class="text-lg font-medium mb-4">Criar usuário</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <app-input type="text" placeholder="Nome" label="Nome" formControlName="name" ngClass="mb-2" />
+    <div *ngIf="name?.invalid && (submitted || name?.touched)" class="mb-4">
+      <app-input-error *ngIf="name?.errors?.email || name?.errors?.required">Nome obrigratório</app-input-error>
+    </div>
+
+    <app-input type="text" placeholder="CPF" label="CPF" formControlName="cpf" ngClass="mb-2" />
+    <div *ngIf="cpf?.invalid && (submitted || cpf?.touched)" class="mb-4">
+      <app-input-error *ngIf="cpf?.errors?.cpf || cpf?.errors?.required">O CPF é obrigatório.</app-input-error>
+      <app-input-error *ngIf="cpf?.errors?.cpf ||  cpf?.errors?.pattern">O CPF deve ser em formato
+        XXX.XXX.XXX-XX
+      </app-input-error>
+    </div>
+
+    <app-input type="email" placeholder="E-mail" label="E-mail" formControlName="email" />
+    <div *ngIf="email?.invalid && (submitted || email?.touched)" class="mb-4">
+      <app-input-error *ngIf="email?.errors?.email || email?.errors?.required">Email inválido</app-input-error>
+    </div>
+
+    <app-input type="password" placeholder="Senha" label="Senha" formControlName="password" ngClass="mb-4" />
+    <div *ngIf="password?.invalid && (submitted || password?.touched)" class="mb-4">
+      <app-input-error *ngIf="password?.errors?.email || password?.errors?.required">Senha obrigratória
+      </app-input-error>
+    </div>
+
+    <label class="flex flex-col mb-4">
+      <span>Escolha um cargo:</span>
+      <select matNativeControl formControlName="role"
+              class="p-2 border border-zinc-300 rounded-md w-full outline-gray-500">
+        @for (role of roles; track role) {
+          <option [value]="role">{{ role }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="flex flex-col mb-4">
+      <span>Escolha um departamento:</span>
+      <select matNativeControl formControlName="departmentId"
+              class="p-2 border border-zinc-300 rounded-md w-full outline-gray-500">
+        @for (department of departments; track department) {
+          <option [value]="department.id">{{ department.name }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="flex justify-between">
+      <div class="flex gap-2">
+        <app-button mat-dialog-close variant="secondary">Cancelar</app-button>
+        <app-button *ngIf="authService.isAdmin()" variant="primary" type="submit">Criar usuário</app-button>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>

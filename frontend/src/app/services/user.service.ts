@@ -15,6 +15,15 @@ export type UpdateRequest = {
   email: string;
 }
 
+export type CreateRequest = {
+  name: string,
+  cpf: string,
+  email: string,
+  password: string,
+  role: string,
+  departmentId: number,
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,6 +52,10 @@ export class UserService {
 
   deleteUser(id: number) {
     return this.http.delete<void>(`${API_URL}/user/${id}`).pipe(tap(() => this.globalVariablesService.deleteUserFromList(id)));
+  }
+
+  createUser(data: CreateRequest) {
+    return this.http.post<User>(API_URL + '/user/create', data).pipe(tap(user => this.globalVariablesService.addUserToList(user)));
   }
 }
 
