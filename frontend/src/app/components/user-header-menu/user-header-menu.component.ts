@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from '../../types/User';
 import { NgIf, NgSwitch } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-header-menu',
@@ -23,6 +24,7 @@ export class UserHeaderMenuComponent implements OnInit {
 
   constructor(
     private globalVariablesService: GlobalVariablesService,
+    private authService: AuthService,
   ) {
   }
 
@@ -30,6 +32,10 @@ export class UserHeaderMenuComponent implements OnInit {
     this.globalVariablesService.loggedUser$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(user => this.loggedUser = user);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }
