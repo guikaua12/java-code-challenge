@@ -60,9 +60,9 @@ public class UsuarioControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"email\":\"test@test.com\", \"password\":\"password\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.email", is("test@test.com")))
-                .andExpect(jsonPath("$.token").exists());
+                .andExpect(jsonPath("$.user.id", is(1)))
+                .andExpect(jsonPath("$.user.email", is("test@test.com")))
+                .andExpect(jsonPath("$.token.token").exists());
     }
 
     @Test
