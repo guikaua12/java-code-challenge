@@ -56,10 +56,10 @@ public interface UsuarioController {
     @GetMapping("/{id}")
     UsuarioDTO findById(@PathVariable("id") Long id);
 
-    @Operation(summary = "Retorna um usuário pelo seu token.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Retorna o usuário"),
-            @ApiResponse(responseCode = "403", description = "Código inválido"),
+    @Operation(summary="Retorna um usuário pelo seu token.")
+    @ApiResponses(value={
+            @ApiResponse(responseCode="200", description="Retorna o usuário"),
+            @ApiResponse(responseCode="403", description="Código inválido"),
     })
     @GetMapping("/token")
     Usuario findByToken(@RequestHeader("Authorization") String token);
