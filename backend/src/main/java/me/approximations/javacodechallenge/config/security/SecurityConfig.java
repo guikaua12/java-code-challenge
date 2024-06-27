@@ -29,6 +29,7 @@ public class SecurityConfig {
             new PathMatcher(HttpMethod.POST, "/user/register"),
             new PathMatcher(HttpMethod.POST, "/user/login"),
             new PathMatcher(HttpMethod.GET, "/user/"),
+            new PathMatcher(HttpMethod.GET, "/user/token"),
             new PathMatcher(HttpMethod.GET, "/user/{id}"),
             new PathMatcher(HttpMethod.GET, "/department/"),
             new PathMatcher(HttpMethod.GET, "/department/{id}"),
