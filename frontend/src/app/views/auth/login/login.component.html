@@ -4,7 +4,17 @@
 
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="flex flex-col">
       <app-input type="email" placeholder="Digite seu e-mail" formControlName="email" ngClass="mb-2" />
+      <div *ngIf="email?.invalid && (submitted || email?.touched)" class="mb-4">
+        <app-input-error *ngIf="email?.errors?.email || email?.errors?.required">Email inválido
+        </app-input-error>
+      </div>
+
       <app-input type="password" placeholder="Digite sua senha" formControlName="password" ngClass="mb-2" />
+      <div *ngIf="password?.invalid && (submitted || password?.touched)" class="mb-4">
+        <app-input-error *ngIf="password?.errors?.email || password?.errors?.required">Senha obrigratória
+        </app-input-error>
+      </div>
+
       <a routerLink="/auth/register" class="text-sm mb-2">Não tem uma conta? <span
         class="text-blue-600 text-sm font-medium">Cadastrar</span></a>
       <app-button type="submit" class="">Login</app-button>

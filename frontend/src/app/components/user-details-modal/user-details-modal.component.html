@@ -4,8 +4,25 @@
 
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <app-input type="text" placeholder="Digite seu nome" label="Nome" formControlName="name" ngClass="mb-2" />
+    <div *ngIf="name?.invalid && (submitted || name?.touched)" class="mb-4">
+      <app-input-error *ngIf="name?.errors?.required">Nome obrigatório
+      </app-input-error>
+    </div>
+
     <app-input type="text" placeholder="Digite seu CPF" label="CPF" formControlName="cpf" ngClass="mb-2" />
+    <div *ngIf="cpf?.invalid && (submitted || cpf?.touched)" class="mb-4">
+      <app-input-error *ngIf="cpf?.errors?.required">CPF obrigatório
+      </app-input-error>
+      <app-input-error *ngIf="cpf?.errors?.cpf ||  cpf?.errors?.pattern">O CPF deve ser em formato
+        XXX.XXX.XXX-XX
+      </app-input-error>
+    </div>
+
     <app-input type="email" placeholder="Digite seu e-mail" label="Senha" formControlName="email" ngClass="mb-2 mb-4" />
+    <div *ngIf="email?.invalid && (submitted || email?.touched)" class="mb-4">
+      <app-input-error *ngIf="email?.errors?.required || email?.errors?.email">Email inválido
+      </app-input-error>
+    </div>
 
     <div class="flex justify-between">
       <app-button *ngIf="authService.isAdmin()" variant="danger" class="font-medium" (click)="deleteUser()">

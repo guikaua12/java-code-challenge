@@ -16,17 +16,20 @@ import { User } from '../../types/User';
 import { UserService } from '../../services/user.service';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { CPF_REGEX } from '../../utils/regexUtils';
+import { InputErrorComponent } from '../input-error/input-error.component';
 
 @Component({
   selector: 'app-user-details-modal',
   standalone: true,
   templateUrl: './user-details-modal.component.html',
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, InputComponent, ReactiveFormsModule, ButtonComponent, MatIcon, NgIf],
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, InputComponent, ReactiveFormsModule, ButtonComponent, MatIcon, NgIf, InputErrorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserDetailsModalComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<UserDetailsModalComponent>);
   form: FormGroup;
+  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: User, private userService: UserService, protected authService: AuthService) {
   }
@@ -34,12 +37,25 @@ export class UserDetailsModalComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: [this.data.name, [Validators.required]],
-      cpf: [this.data.cpf, [Validators.required]],
+      cpf: [this.data.cpf, [Validators.required, Validators.pattern(CPF_REGEX)]],
       email: [this.data.email, [Validators.required, Validators.email]],
     });
   }
 
+  get name() {
+    return this.form.get('name');
+  }
+
+  get cpf() {
+    return this.form.get('cpf');
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
+
   submitForm() {
+    this.submitted = true;
     if (!this.form.valid) return;
 
     const { name, cpf, email } = this.form.value;
