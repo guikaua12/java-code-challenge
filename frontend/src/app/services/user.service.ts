@@ -57,5 +57,9 @@ export class UserService {
   createUser(data: CreateRequest) {
     return this.http.post<User>(API_URL + '/user/create', data).pipe(tap(user => this.globalVariablesService.addUserToList(user)));
   }
+
+  fetchInitialUsers() {
+    return this.listUsers().subscribe(users => this.globalVariablesService.updateUsers(users));
+  }
 }
 

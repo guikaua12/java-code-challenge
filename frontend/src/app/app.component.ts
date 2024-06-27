@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.initialUserFetch();
-    this.userService.listUsers().subscribe(users => this.globalVariablesService.updateUsers(users));
+    this.userService.fetchInitialUsers();
+    this.globalVariablesService.loggedUser$.subscribe(user => this.userService.fetchInitialUsers());
   }
 
 }
