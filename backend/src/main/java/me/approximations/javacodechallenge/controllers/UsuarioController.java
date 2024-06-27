@@ -19,7 +19,7 @@ public interface UsuarioController {
             @ApiResponse(responseCode="401", description="Credenciais inválidas"),
     })
     @PostMapping("/login")
-    TokenResponse login(@RequestBody @Valid UsuarioLoginDTO dto);
+    LoginResponse login(@RequestBody @Valid UsuarioLoginDTO dto);
 
     @Operation(summary="Registra uma usuário e retorna um token JWT.")
     @ApiResponses(value={
@@ -28,7 +28,7 @@ public interface UsuarioController {
             @ApiResponse(responseCode="404", description="Departamento não encontrado"),
     })
     @PostMapping("/register")
-    TokenResponse register(@RequestBody @Valid RegisterUsuarioDTO dto);
+    LoginResponse register(@RequestBody @Valid RegisterUsuarioDTO dto);
 
     @Operation(summary="Cria um usuário.")
     @ApiResponses(value={
